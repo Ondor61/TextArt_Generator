@@ -1,11 +1,13 @@
 from PIL import Image
 import tkinter as Tk
 from tkinter import filedialog
+import numpy
 
 textArt = str()
 colourBW = [[]]
 hVar1 = float()
 hVar2 = float()
+
 
 defaultDirectory = ""
 def openFile():
@@ -17,17 +19,21 @@ def openFile():
 
 def getPixels(image):
     colourBW = [[0 for x in range (image.width)] for y in range ((image.height - image.height %2) // 2)]
-    imageRGB = image.convert('RGB')
+    image = image.convert('RGBA')
+    r, g, b, a = image.split()
+    r, g, b, a = numpy.asarray(r), numpy.asarray(g), numpy.asarray(b), numpy.asarray(a)
+
     for y in range (0, image.height - image.height %2, 2):
         for x in range (image.width):
 
-            R = min(imageRGB.getpixel((x, y))[0] , imageRGB.getpixel((x, y+1))[0])
-            G = min(imageRGB.getpixel((x, y))[1] , imageRGB.getpixel((x, y+1))[1])
-            B = min(imageRGB.getpixel((x, y))[2] , imageRGB.getpixel((x, y+1))[2])
+            if max(a[y][x],a[y+1][x]) == 0:
+                colourBW[y//2][x] = 255
 
-            colourBW[y//2][x] = percievedLightness(R, G, B)
-            colourBW[y//2][x] = changeScale(100, 255, colourBW[y//2][x])
-            colourBW[y//2][x] = round(colourBW[y//2][x])
+            else:
+                colourBW[y//2][x] = percievedLightness(max(r[y][x], r[y+1][x]), max(g[y][x], g[y+1][x]), max(b[y][x], b[y+1][x]))
+                colourBW[y//2][x] = changeScale(100, 255, colourBW[y//2][x])
+                colourBW[y//2][x] = round(colourBW[y//2][x])
+
     return colourBW
     
 
@@ -36,6 +42,7 @@ def changeScale(oldScale, newScale, value):
 
 def changeScaleComplete(oldScaleLow, oldScaleHigh, newScalleLow, newScaleHigh, value):
     return float (((value - oldScaleLow) / oldScaleHigh) * (newScaleHigh - newScalleLow) + newScalleLow)
+
 
 def Delinearise(RGBvalue):
     decimalRGBcolor = changeScale(255, 1, RGBvalue)
@@ -51,6 +58,7 @@ def percievedLightness(R, G, B):
     if luminance < 0.008856:
         return luminance * 903.3
     return luminance ** (1/3) * 116 - 16
+
 
 def drawImage(lowScale, midScale, topScale):
     global colourBW
@@ -72,6 +80,7 @@ def drawImage(lowScale, midScale, topScale):
     ]
     return "\n".join(canvas)
 
+
 def saveFile(canvas):
     path = filedialog.asksaveasfilename (defaultextension = '.txt', filetypes = (('Text', '*.txt'),('All', '*.*')))
     if path is None:
@@ -85,6 +94,7 @@ def saveFile(canvas):
     file.write(canvas)
     return canvas
 
+
 def openImage():
     image = openFile()
     global colourBW
@@ -94,10 +104,12 @@ def openImage():
     canvas.delete(1.0, Tk.END)
     canvas.insert(1.0, textArt)
 
+
 def saveTextArt():
     if textArt == "":
         return
     saveFile(textArt)
+
 
 def updateColourMiddle(midScale):
     global textArt
@@ -114,6 +126,7 @@ def updateColourTop(topScale):
     textArt = drawImage(int(colourSliderLow.get()), int(colourSliderMiddle.get()), int(topScale))
     updateCanvas()
 
+
 def updateCanvas():
     global textArt
     scroll = scrollbarY.get()
@@ -121,6 +134,7 @@ def updateCanvas():
     canvas.delete(1.0, Tk.END)
     canvas.insert(1.0, textArt)
     canvas.yview_moveto(scroll)   
+
 
 def updateFont(fontSize):
     canvas.configure(font=("Courier", fontSize))
@@ -148,7 +162,6 @@ frameColourSliders.pack(side=Tk.BOTTOM, expand=True, fill=Tk.X)
 
 frameZoom = Tk.Frame(frameSliders)
 frameZoom.pack(side=Tk.BOTTOM, expand=True, fill=Tk.X)
-
 
 openImg = Tk.Button(frameButtons, text="Open Image", width=15, command=openImage)
 openImg.pack(side=Tk.TOP, expand=True, fill=Tk.Y)
@@ -183,9 +196,8 @@ canvas = Tk.Text(window, wrap=Tk.NONE, font=("Courier", 8), xscrollcommand=scrol
 scrollbarY.config(command=canvas.yview)
 scrollbarX.config(command=canvas.xview)
 
-
-scrollbarY.pack(side=Tk.RIGHT, fill=Tk.Y)
-scrollbarX.pack(side=Tk.BOTTOM, fill=Tk.X)
+scrollbarY.pack(side=Tk.RIGHT, fill=Tk.Y, pady=(1, 18))
+scrollbarX.pack(side=Tk.BOTTOM, fill=Tk.X, padx=(1, 0))
 canvas.pack(side=Tk.LEFT, expand=True, fill=Tk.BOTH)
 
 window.mainloop() 
