@@ -6,3 +6,9 @@ This tool has basic functions for editing the colours of the image using basic i
 The top slider is mid-tone Point and the bottom two sliders change white point and black point respectively.
 Output is displayed on a text field bellow the sliders.
 Size of the font used to display the image can be set by the slider titled font size.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://pbs.twimg.com/media/FyND5bXXoAAqtxo?format=png&name=900x900">
+  <source media="(prefers-color-scheme: light)" srcset="https://pbs.twimg.com/media/FyND5bXXoAAqtxo?format=png&name=900x900">
+  <img alt="The tool." src="https://pbs.twimg.com/media/FyND5bXXoAAqtxo?format=png&name=900x900">
+</picture>
