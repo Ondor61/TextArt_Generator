@@ -1,11 +1,14 @@
-## Text Art Generator
+# Text Art Generator
 
-This is a simple python script with UI for creating textArt from images.
-It allows for creating, copying and saving of textArt.
-This tool has basic functions for editing the colours of the image using basic input levels tool.
-The top slider is mid-tone Point and the bottom two sliders change white point and black point respectively.
-Output is displayed on a text field bellow the sliders.
-Size of the font used to display the image can be set by the slider titled font size.
+This is a Python script that converts images into ASCII art. It utilizes the PIL for image processing and tkinter for creating a user interface.
+
+## Features
+
+* Convert the image to ASCII art: The selected image is quickly processed to generate your AsciiArt.
+* Complete UI: including file dialogs for opening and saving images.
+* Adjust the color: Users can adjust the mid-tone point along with white and black points to fine tune the text_art to suit their needs.
+* Display the ASCII art: The generated ASCII art is shown in a text canvas within the UI, allowing users to scroll both horizontally and vertically while also having the ability to change the font size.
+* Save the ASCII art: Users can save the generated ASCII art as a text file.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://pbs.twimg.com/media/FyND5bXXoAAqtxo?format=png&name=900x900">
