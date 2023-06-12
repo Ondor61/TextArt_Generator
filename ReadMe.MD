@@ -10,6 +10,17 @@ This is a Python script that converts images into ASCII art. It utilizes the PIL
 * Display the ASCII art: The generated ASCII art is shown in a text canvas within the UI, allowing users to scroll both horizontally and vertically while also having the ability to change the font size.
 * Save the ASCII art: Users can save the generated ASCII art as a text file.
 
+## Dependencies
+
+The script relies on the following dependencies:
+* PIL (Python Imaging Library)
+* tkinter
+
+## Usage
+
+* Make sure you have Python and PIL installed
+* Run the script
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://pbs.twimg.com/media/FyND5bXXoAAqtxo?format=png&name=900x900">
   <source media="(prefers-color-scheme: light)" srcset="https://pbs.twimg.com/media/FyND5bXXoAAqtxo?format=png&name=900x900">
