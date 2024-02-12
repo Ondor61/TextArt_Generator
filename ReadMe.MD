@@ -8,7 +8,7 @@ This is a Python script that converts images into ASCII art. It utilizes the PIL
 * Complete UI: including file dialogs for opening and saving images.
 * Adjust the color: Users can adjust the mid-tone point along with white and black points to fine tune the text_art to suit their needs.
 * Display the ASCII art: The generated ASCII art is shown in a text canvas within the UI, allowing users to scroll both horizontally and vertically while also having the ability to change the font size.
-* Save the ASCII art: Users can save the generated ASCII art as a text file.
+* Save the ASCII art: Users can save the generated ASCII art as a text file or copy it straight from the prewiev.
 
 ## Dependencies
 
